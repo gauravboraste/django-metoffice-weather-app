@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+<title>{% block title %}Home_Fetch {% endblock %}</title>
+{% block content %}
+<div class="fetch">
+<h1 class="fetch-head">Fetch Climate Data</h1>
+<form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Fetch Data</button>
+</form>
+</div>
+{% endblock %}
+
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Climate Data</title>
+</head>
+<body>
+    <h1>Fetch Climate Data</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Fetch Data</button>
+    </form>
+</body>
+</html> {% endcomment %}

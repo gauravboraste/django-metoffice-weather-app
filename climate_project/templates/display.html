@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+<title>{% block title %}Results {% endblock %}</title>
+{% block content %}
+<h1>Climate Data</h1>
+<form id="chart-form">
+  <div class="selectfield">
+  <label for="attributes" class="form-label">Select attributes to display:</label>
+  
+
+  <div class="row">
+    <div class="col-sm"><select id="region" name="region" class="form-select">
+      <option value="">Select Region</option>
+      {% for region in regions %}
+          <option value="{{ region }}">{{ region }}</option>
+      {% endfor %}
+    </select>
+  </div>
+    <div class="col-sm"><select id="year" name="year" class="form-select">
+      <option value="">Select Year</option>
+      {% for year in years %}
+          <option value="{{ year }}">{{ year }}</option>
+      {% endfor %}
+    </select>
+  </div>
+    <div class="col-sm">
+      <select id="parameter" name="parameter" class="form-select">
+        <option value="">Select Parameter</option>
+        {% for parameter in parameters %}
+            <option value="{{ parameter }}">{{ parameter }}</option>
+        {% endfor %}
+      </select>
+  </div>
+  </div>
+</div>
+  
+ <div class="submitbtn">
+  <button type="submit" class="button btn btn-success">Update Chart</button>
+</div>
+</div>
+</form>
+<div class="img">
+<img id="chart-image" class="bg" src="{{ plot_url }}" alt="Climate Data Chart">
+</div>
+<script>
+  document.getElementById('chart-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const region = document.getElementById('region').value;
+    const year = document.getElementById('year').value;
+    const parameter = document.getElementById('parameter').value;
+  
+    // Update chart data using AJAX
+    fetch(`/api/get_data/?region=${region}&year=${year}&parameter=${parameter}`)
+      .then(response => response.text())  // Get the response as text (HTML)
+      .then(html => {
+        // Create a temporary DOM element to parse the HTML response
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+  
+        // Extract the new chart image source from the response
+        const newChartSrc = doc.querySelector('#chart-image').src;
+        
+        // Update the existing chart image source
+        document.getElementById('chart-image').src = newChartSrc;
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  });
+  ;
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+  <title>Climate Data</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+</head>
+<body>
+  <h1>Climate Data</h1>
+  <form id="chart-form">
+    <label for="attributes">Select attributes to display:</label>
+    
+    <select id="region" name="region">
+      <option value="">Select Region</option>
+      {% for region in regions %}
+          <option value="{{ region }}">{{ region }}</option>
+      {% endfor %}
+    </select>
+    
+    <select id="year" name="year">
+      <option value="">Select Year</option>
+      {% for year in years %}
+          <option value="{{ year }}">{{ year }}</option>
+      {% endfor %}
+    </select>
+    
+    <select id="parameter" name="parameter">
+      <option value="">Select Parameter</option>
+      {% for parameter in parameters %}
+          <option value="{{ parameter }}">{{ parameter }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Update Chart</button>
+  </form>
+
+  <img id="chart-image" src="{{ plot_url }}" alt="Climate Data Chart">
+
+  <script>
+    document.getElementById('chart-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const region = document.getElementById('region').value;
+      const year = document.getElementById('year').value;
+      const parameter = document.getElementById('parameter').value;
+    
+      // Update chart data using AJAX
+      fetch(`/api/get_data/?region=${region}&year=${year}&parameter=${parameter}`)
+        .then(response => response.text())  // Get the response as text (HTML)
+        .then(html => {
+          // Create a temporary DOM element to parse the HTML response
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+    
+          // Extract the new chart image source from the response
+          const newChartSrc = doc.querySelector('#chart-image').src;
+          
+          // Update the existing chart image source
+          document.getElementById('chart-image').src = newChartSrc;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    });
+    ;
+  </script>
+</body>
+</html> {% endcomment %}

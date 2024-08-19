@@ -1,0 +1,65 @@
+.check {
+  background-color: black;
+  height: 500px;
+  width: 500px;
+  color: azure;
+}
+
+.form {
+  text-align: center;
+  padding: 30px;
+}
+
+.fetch-head {
+  text-align: center;
+  margin: 50px;
+}
+
+.fetch {
+  background-color: rgb(98, 236, 121);
+  height: 100%;
+  width: 100%;
+}
+
+.selectfield {
+
+  margin-left: 20px;
+  margin-right: 20px;
+
+}
+
+.form-select {
+  width: 50%;
+  margin: 0 auto;
+  display: block;
+}
+
+.bg {
+  width: 90%;
+
+  height: 80%;
+}
+
+.button {
+  margin-top: 20px;
+}
+
+.submitbtn {
+  display: flex;
+  justify-content: center;
+
+
+
+}
+
+.img {
+  width: 70%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.navbar {
+  color: white;
+}
